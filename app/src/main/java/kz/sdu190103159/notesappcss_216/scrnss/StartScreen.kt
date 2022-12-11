@@ -29,8 +29,8 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewMdl) {
 
     val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val coroutionScope = rememberCoroutineScope()
-    var login by remember { mutableStateOf("Empty") }
-    var password by remember { mutableStateOf("Empty") }
+    var login by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
     ModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetElevation = 5.dp,
