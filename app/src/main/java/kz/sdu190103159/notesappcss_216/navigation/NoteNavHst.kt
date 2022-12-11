@@ -8,6 +8,7 @@ import kz.sdu190103159.notesappcss_216.scrnss.StartScreen
 import kz.sdu190103159.notesappcss_216.scrnss.MainScreen
 import kz.sdu190103159.notesappcss_216.scrnss.NoteScreen
 import kz.sdu190103159.notesappcss_216.scrnss.AddScreen
+import kz.sdu190103159.notesappcss_216.MainViewMdl
 
 sealed class NavRoute(val route:String ){
     object StartScreen: NavRoute("start_screen")
@@ -16,21 +17,21 @@ sealed class NavRoute(val route:String ){
     object NoteScreen: NavRoute("note_screen")
 }
 @Composable
-fun NoteNavHst() {
+fun NoteNavHst(mViewModel: MainViewMdl) {
     val navController = rememberNavController()
 
     NavHost(navController = navController , startDestination = NavRoute.StartScreen.route ) {
         composable(NavRoute.StartScreen.route) {
-            StartScreen(navController = navController)
+            StartScreen(navController = navController , viewModel = mViewModel)
         }
         composable(NavRoute.MainScreen.route) {
-            MainScreen(navController = navController)
+            MainScreen(navController = navController , viewModel = mViewModel)
         }
         composable(NavRoute.AddScreen.route) {
-            AddScreen(navController = navController)
+            AddScreen(navController = navController , viewModel = mViewModel)
         }
         composable(NavRoute.NoteScreen.route) {
-            NoteScreen(navController = navController)
+            NoteScreen(navController = navController, viewModel = mViewModel)
         }
     }
 }

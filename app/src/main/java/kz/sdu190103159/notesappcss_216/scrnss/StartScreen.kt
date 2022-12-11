@@ -22,7 +22,7 @@ import kz.sdu190103159.notesappcss_216.utils.TYPE_FIREBASE
 import kz.sdu190103159.notesappcss_216.utils.TYPE_ROOM
 
 @Composable
-fun StartScreen(navController: NavHostController) {
+fun StartScreen(navController: NavHostController, viewModel: MainViewMdl) {
     val context = LocalContext.current
     val mViewModel: MainViewMdl =
         viewModel(factory = MainViewMdlFactory(context.applicationContext as Application))
@@ -70,6 +70,10 @@ fun StartScreen(navController: NavHostController) {
 @Composable
 fun prevStartScreen(){
     NotesAppCSS216Theme {
-        StartScreen(navController = rememberNavController())
+        val context = LocalContext.current
+        val mViewModel: MainViewMdl =
+            viewModel(factory = MainViewMdlFactory(context.applicationContext as Application))
+
+        StartScreen(navController = rememberNavController(), viewModel = mViewModel)
     }
 }

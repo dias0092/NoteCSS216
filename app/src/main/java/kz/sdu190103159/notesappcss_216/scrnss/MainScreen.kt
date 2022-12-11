@@ -30,11 +30,8 @@ import kz.sdu190103159.notesappcss_216.ui.theme.NotesAppCSS216Theme
 import kz.sdu190103159.notesappcss_216.model.Note
 
 @Composable
-fun MainScreen(navController: NavHostController) {
-    val context = LocalContext.current
-    val mViewModel: MainViewMdl =
-        viewModel(factory = MainViewMdlFactory(context.applicationContext as Application))
-
+fun MainScreen(navController: NavHostController, viewModel: MainViewMdl) {
+    val notes = viewModel.readAllNotes().observeAsState(listOf()).value
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
@@ -46,11 +43,11 @@ fun MainScreen(navController: NavHostController) {
             }
         }
     ){
-       // LazyColumn {
-         //   items(notes) {
-           //     note -> NoteItem(note = note , navController = navController)
-            //}
-        //}
+        LazyColumn {
+            items(notes) {
+                note -> NoteItem(note = note , navController = navController)
+            }
+        }
 
     }
 }
@@ -84,6 +81,9 @@ fun NoteItem(note: Note, navController: NavHostController){
 @Composable
 fun prevMainScreen(){
     NotesAppCSS216Theme {
-        MainScreen(navController = rememberNavController())
+        val context = LocalContext.current
+        val mViewModel: MainViewMdl =
+            viewModel(factory = MainViewMdlFactory(context.applicationContext as Application))
+        MainScreen(navController = rememberNavController(), viewModel = mViewModel)
     }
 }
