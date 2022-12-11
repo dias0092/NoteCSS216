@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import kz.sdu190103159.notesappcss_216.model.Note
-import kz.sdu190103159.notesappcss_216.utils.TYPE_FIREBASE
+
 import kz.sdu190103159.notesappcss_216.utils.TYPE_ROOM
 
 class MainViewMdl(application: Application) : AndroidViewModel(application) {
