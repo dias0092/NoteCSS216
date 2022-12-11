@@ -8,15 +8,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kz.sdu190103159.notesappcss_216.database.firebase.AppFirebaseRepository
 import kz.sdu190103159.notesappcss_216.database.room.AppRoomDatabase
 import kz.sdu190103159.notesappcss_216.database.room.repository.RoomRepository
 import kz.sdu190103159.notesappcss_216.model.Note
-
-import kz.sdu190103159.notesappcss_216.utils.REPOSITORY
-
-import kz.sdu190103159.notesappcss_216.utils.TYPE_ROOM
+import kz.sdu190103159.notesappcss_216.utils.*
 
 class MainViewMdl(application: Application) : AndroidViewModel(application) {
 
@@ -29,6 +28,13 @@ class MainViewMdl(application: Application) : AndroidViewModel(application) {
                 val dao = AppRoomDatabase.getInstance(context =  context).getRoomDao()
                 REPOSITORY = RoomRepository(dao)
                 onSuccess()
+            }
+            TYPE_FIREBASE -> {
+                REPOSITORY = AppFirebaseRepository()
+                REPOSITORY.connectToDatabase(
+                    { onSuccess()},
+                    { Log.d("checkData", "Error: ${it}")}
+                )
             }
         }
     }
@@ -60,6 +66,19 @@ class MainViewMdl(application: Application) : AndroidViewModel(application) {
         }
     }
     fun readAllNotes() = REPOSITORY.readAll
+
+    fun signOut(onSucccess: () -> Unit) {
+        when(DB_TYPE.value) {
+            TYPE_FIREBASE,
+                TYPE_ROOM -> {
+                    REPOSITORY.singOut()
+                DB_TYPE.value = Constants.Keys.EMPTY
+                onSucccess()
+                }
+            else -> {Log.d("checkData","signOut: ELSE: ${DB_TYPE.value} " )}
+
+        }
+    }
 }
 
 class MainViewMdlFactory(private val application: Application) : ViewModelProvider.Factory {

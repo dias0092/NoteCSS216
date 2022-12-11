@@ -35,6 +35,7 @@ import kz.sdu190103159.notesappcss_216.utils.Constants.Keys.NONE
 import kz.sdu190103159.notesappcss_216.utils.Constants.Keys.SUBTITLE
 import kz.sdu190103159.notesappcss_216.utils.Constants.Keys.TITLE
 import kz.sdu190103159.notesappcss_216.utils.Constants.Keys.UPDATE
+import kz.sdu190103159.notesappcss_216.utils.Constants.Keys.UPDATE_NOTE
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -46,6 +47,51 @@ fun NoteScreen(navController: NavHostController, viewModel: MainViewMdl, noteId:
     var title by remember { mutableStateOf("Empty") }
     var subtitle by remember { mutableStateOf("Empty") }
 
+    ModalBottomSheetLayout(
+        sheetState = bottomSheetState,
+        sheetElevation = 5.dp,
+        sheetShape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
+        sheetContent = {
+            Surface {
+                Column (
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(all = 32.dp)
+                ){  Text(
+                    text = "Edit note",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier =  Modifier.padding(vertical = 8.dp)
+                )
+                    TextField(
+                        value = title ,
+                        onValueChange = { title = it },
+                        label = { Text(text = TITLE)},
+                        isError = title.isEmpty()
+                    )
+                    TextField(
+                        value = subtitle ,
+                        onValueChange = { subtitle = it },
+                        label = { Text(text = SUBTITLE)},
+                        isError = subtitle.isEmpty()
+                    )
+                    Button(
+                        modifier = Modifier.padding(top = 16.dp),
+                        onClick = {
+                            viewModel.updateNote(
+                                note =
+                                Note(id = note.id, title = title, subtitle = subtitle)
+                            ){
+                                navController.navigate(NavRoute.MainScreen.route)
+                            }
+                        })
+                    {
+                        Text(text = UPDATE)
+                    }
+                }
+            }
+        }
+    ) {
     Scaffold(
         modifier = Modifier.fillMaxSize()
     ){
@@ -112,51 +158,7 @@ fun NoteScreen(navController: NavHostController, viewModel: MainViewMdl, noteId:
                 }
             }
         }
-        ModalBottomSheetLayout(
-            sheetState = bottomSheetState,
-            sheetElevation = 5.dp,
-            sheetShape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
-            sheetContent = {
-                Surface {
-                    Column (
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(all = 32.dp)
-                    ){  Text(
-                        text = "Edit note",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier =  Modifier.padding(vertical = 8.dp)
-                    )
-                        TextField(
-                            value = title ,
-                            onValueChange = { title = it },
-                            label = { Text(text = TITLE)},
-                            isError = title.isEmpty()
-                        )
-                        TextField(
-                            value = subtitle ,
-                            onValueChange = { subtitle = it },
-                            label = { Text(text = SUBTITLE)},
-                            isError = subtitle.isEmpty()
-                        )
-                        Button(
-                            modifier = Modifier.padding(top = 16.dp),
-                            onClick = {
-                                viewModel.updateNote(
-                                    note =
-                                    Note(id = note.id, title = title, subtitle = subtitle)
-                                ){
-                                    navController.navigate(NavRoute.MainScreen.route)
-                                }
-                            })
-                        {
-                            Text(text = UPDATE)
-                        }
-                    }
-                }
-            }
-        ) {
+
 
         }
 
