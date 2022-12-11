@@ -24,7 +24,7 @@ class MainViewMdl(application: Application) : AndroidViewModel(application) {
                     listOf<Note>(
                         Note(title = "Note 1" , subtitle = "SubNote 1"),
                         Note(title = "Note 1" , subtitle = "SubNote 2"),
-                        Note(title = "Note 3" , subtitle = "SubNote 3"),
+                        Note(title = "Note 5" , subtitle = "SubNote 3"),
                         Note(title = "Note 4" , subtitle = "SubNote 4")
                     )
                 } else -> listOf()
