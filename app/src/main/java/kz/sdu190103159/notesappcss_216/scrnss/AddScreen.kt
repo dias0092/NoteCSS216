@@ -21,6 +21,11 @@ import kz.sdu190103159.notesappcss_216.MainViewMdlFactory
 import kz.sdu190103159.notesappcss_216.model.Note
 import kz.sdu190103159.notesappcss_216.navigation.NavRoute
 import kz.sdu190103159.notesappcss_216.ui.theme.NotesAppCSS216Theme
+import kz.sdu190103159.notesappcss_216.utils.Constants.Keys.ADD_NEW_NOTE
+import kz.sdu190103159.notesappcss_216.utils.Constants.Keys.NOTE_ADD
+import kz.sdu190103159.notesappcss_216.utils.Constants.Keys.NOTE_SUBTITLE
+import kz.sdu190103159.notesappcss_216.utils.Constants.Keys.NOTE_TITLE
+
 
 @Composable
 fun AddScreen(navController: NavHostController, viewModel: MainViewMdl) {
@@ -35,7 +40,7 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewMdl) {
         )
         {
            Text(
-               text = "Add new note",
+               text = ADD_NEW_NOTE,
                fontSize = 18.sp,
                fontWeight = FontWeight.Bold,
                modifier = Modifier.padding(vertical = 8.dp)
@@ -48,7 +53,7 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewMdl) {
                     title = it
                     isButtonEnb = title.isNotEmpty() && subtitle.isNotEmpty()
                                 },
-                label = {Text(text = "Note title")},
+                label = {Text(text = NOTE_TITLE)},
                 isError = title.isEmpty()
             )
             TextField(
@@ -57,7 +62,7 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewMdl) {
                     subtitle = it
                     isButtonEnb = title.isNotEmpty() && subtitle.isNotEmpty()
                                 },
-                label = {Text(text = "Note subtitle")},
+                label = {Text(text = NOTE_SUBTITLE)},
                 isError = subtitle.isEmpty()
             )
             Button(
@@ -70,7 +75,7 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewMdl) {
 
                 }
             ) {
-                Text(text = "Add note")
+                Text(text = NOTE_ADD)
             }
         }
     }

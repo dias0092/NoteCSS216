@@ -34,7 +34,7 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewMdl) {
             horizontalAlignment = Alignment.CenterHorizontally ,
             verticalArrangement = Arrangement.Center )
         {
-        Text(text = "First")
+        Text(text = "Zhuzyas NOTES")
         Button(
             onClick = {
                 mViewModel.initDatabase(TYPE_ROOM){
