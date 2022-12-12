@@ -48,20 +48,20 @@ class MainViewMdl(application: Application) : AndroidViewModel(application) {
             }
         }
     }
-    fun updateNote(note: Note , onSucccess: () -> Unit){
+    fun updateNote(note: Note , onSuccess: () -> Unit){
         viewModelScope.launch ( Dispatchers.IO ){
             REPOSITORY.update(note = note) {
                 viewModelScope.launch ( Dispatchers.Main ){
-                    onSucccess()
+                    onSuccess()
                 }
             }
         }
     }
-    fun deleteNote(note: Note, onSucccess: () -> Unit){
+    fun deleteNote(note: Note, onSuccess: () -> Unit){
         viewModelScope.launch(Dispatchers.IO){
             REPOSITORY.delete(note = note){
                 viewModelScope.launch(Dispatchers.Main){
-                    onSucccess()
+                    onSuccess()
                 }
             }
         }

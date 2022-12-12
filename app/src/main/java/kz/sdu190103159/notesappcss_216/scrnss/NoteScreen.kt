@@ -53,7 +53,7 @@ fun NoteScreen(navController: NavHostController, viewModel: MainViewMdl, noteId:
         else -> Note()
     }
     val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
-    val coroutionScope = rememberCoroutineScope()
+    val coroutineScope = rememberCoroutineScope()
     var title by remember { mutableStateOf(EMPTY) }
     var subtitle by remember { mutableStateOf(EMPTY) }
 
@@ -65,7 +65,7 @@ fun NoteScreen(navController: NavHostController, viewModel: MainViewMdl, noteId:
             Surface {
                 Column (
                     modifier = Modifier
-                        .fillMaxSize()
+                        .fillMaxWidth()
                         .padding(all = 32.dp)
                 ){  Text(
                     text = "Edit note",
@@ -141,7 +141,7 @@ fun NoteScreen(navController: NavHostController, viewModel: MainViewMdl, noteId:
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
                 Button(onClick = {
-                    coroutionScope.launch {
+                    coroutineScope.launch {
                         title = note.title
                         subtitle = note.subtitle
                         bottomSheetState.show()

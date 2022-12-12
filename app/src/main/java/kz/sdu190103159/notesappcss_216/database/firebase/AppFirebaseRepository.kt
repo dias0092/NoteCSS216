@@ -36,7 +36,7 @@ class AppFirebaseRepository : DatabaseRepository{
     }
 
     override suspend fun update(note: Note, onSuccess: () -> Unit) {
-        val noteId = database.push().key.toString()
+        val noteId = note.fbId
         val mapNotes = hashMapOf<String, Any>()
 
         mapNotes[FIREBASE_ID] = noteId
@@ -55,7 +55,7 @@ class AppFirebaseRepository : DatabaseRepository{
             .addOnFailureListener { Log.d("checkData", "Failed to delete note") }
     }
 
-    override fun singOut() {
+     fun singOut() {
         mAuth.signOut()
     }
 
@@ -70,4 +70,6 @@ class AppFirebaseRepository : DatabaseRepository{
 
 
     }
+
+
 }
