@@ -5,9 +5,9 @@ import kz.sdu190103159.notesappcss_216.database.DatabaseRepository
 import kz.sdu190103159.notesappcss_216.database.room.dao.NoteRoomDao
 import kz.sdu190103159.notesappcss_216.model.Note
 
-class RoomRepository (private val noteRoomDao: NoteRoomDao): DatabaseRepository{
+class RoomRepository(private val noteRoomDao: NoteRoomDao) : DatabaseRepository {
     override val readAll: LiveData<List<Note>>
-        get() = noteRoomDao.getAllNote()
+        get() = noteRoomDao.getAllNotes()
 
     override suspend fun create(note: Note, onSuccess: () -> Unit) {
         noteRoomDao.addNote(note = note)
@@ -24,9 +24,5 @@ class RoomRepository (private val noteRoomDao: NoteRoomDao): DatabaseRepository{
         onSuccess()
     }
 
-    override fun signOut() {
-        TODO("Not yet implemented")
-    }
-
-
+    override fun signOut() {}
 }

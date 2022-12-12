@@ -1,18 +1,17 @@
 package kz.sdu190103159.notesappcss_216.database.firebase
 
 import androidx.lifecycle.LiveData
-import kz.sdu190103159.notesappcss_216.model.Note
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kz.sdu190103159.notesappcss_216.model.Note
 
-
-class NtsLiveData : LiveData<List<Note>>() {
+class NtsLiveData: LiveData<List<Note>>() {
     private val mAuth = FirebaseAuth.getInstance()
-    private val database = Firebase.database.reference
+    private val  database = Firebase.database.reference
         .child(mAuth.currentUser?.uid.toString())
 
     private val listener = object : ValueEventListener {
@@ -24,9 +23,7 @@ class NtsLiveData : LiveData<List<Note>>() {
             value = notes
         }
 
-        override fun onCancelled(error: DatabaseError) {
-
-        }
+        override fun onCancelled(error: DatabaseError) {}
 
     }
 
