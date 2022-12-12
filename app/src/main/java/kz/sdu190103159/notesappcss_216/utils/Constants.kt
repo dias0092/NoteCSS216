@@ -29,7 +29,7 @@ object  Constants {
         const val NONE = "none"
         const val UPDATE = "UPDATE"
         const val DELETE = "DELETE"
-        const val NAV_BACK = "NAV_BACK"
+        const val NAV_BACK = "BACK"
         const val EDIT_NOTE = "Edit note"
         const val EMPTY = ""
         const val UPDATE_NOTE = "Update note"
