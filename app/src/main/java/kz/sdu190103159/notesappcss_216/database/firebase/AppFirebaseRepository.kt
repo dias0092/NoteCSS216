@@ -24,23 +24,35 @@ class AppFirebaseRepository : DatabaseRepository{
 
     override suspend fun create(note: Note, onSuccess: () -> Unit) {
         val noteId = database.push().key.toString()
-        val mapNote = hashMapOf<String, Any>()
-        mapNote[FIREBASE_ID] = noteId
-        mapNote[TITLE] = note.title
-        mapNote[SUBTITLE] = note.subtitle
+        val mapNotes = hashMapOf<String, Any>()
+        mapNotes[FIREBASE_ID] = noteId
+        mapNotes[TITLE] = note.title
+        mapNotes[SUBTITLE] = note.subtitle
 
         database.child(noteId)
-            .updateChildren(mapNote)
+            .updateChildren(mapNotes)
             .addOnSuccessListener { onSuccess() }
             .addOnFailureListener { Log.d("checkData", "Failed to add note to database") }
     }
 
     override suspend fun update(note: Note, onSuccess: () -> Unit) {
-        TODO("Not yet implemented")
+        val noteId = database.push().key.toString()
+        val mapNotes = hashMapOf<String, Any>()
+
+        mapNotes[FIREBASE_ID] = noteId
+        mapNotes[TITLE] = note.title
+        mapNotes[SUBTITLE] = note.subtitle
+
+        database.child(noteId)
+            .updateChildren(mapNotes)
+            .addOnSuccessListener { onSuccess() }
+            .addOnFailureListener { Log.d("checkData", "Failed to update note") }
     }
 
     override suspend fun delete(note: Note, onSuccess: () -> Unit) {
-        TODO("Not yet implemented")
+        database.child(note.fbId).removeValue()
+            .addOnSuccessListener { onSuccess() }
+            .addOnFailureListener { Log.d("checkData", "Failed to delete note") }
     }
 
     override fun singOut() {

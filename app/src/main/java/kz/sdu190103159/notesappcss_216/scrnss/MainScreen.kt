@@ -28,6 +28,10 @@ import kz.sdu190103159.notesappcss_216.MainViewMdlFactory
 import kz.sdu190103159.notesappcss_216.navigation.NavRoute
 import kz.sdu190103159.notesappcss_216.ui.theme.NotesAppCSS216Theme
 import kz.sdu190103159.notesappcss_216.model.Note
+import kz.sdu190103159.notesappcss_216.utils.Constants.Keys.EMPTY
+import kz.sdu190103159.notesappcss_216.utils.DB_TYPE
+import kz.sdu190103159.notesappcss_216.utils.TYPE_FIREBASE
+import kz.sdu190103159.notesappcss_216.utils.TYPE_ROOM
 
 @Composable
 fun MainScreen(navController: NavHostController, viewModel: MainViewMdl) {
@@ -54,12 +58,17 @@ fun MainScreen(navController: NavHostController, viewModel: MainViewMdl) {
 
 @Composable
 fun NoteItem(note: Note, navController: NavHostController){
+    val noteId = when(DB_TYPE.value) {
+        TYPE_FIREBASE -> note.fbId
+        TYPE_ROOM -> note.id
+        else -> EMPTY
+    }
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp, horizontal = 20.dp)
             .clickable {
-                navController.navigate(NavRoute.NoteScreen.route + "/${note.id}")
+                navController.navigate(NavRoute.NoteScreen.route + "/{${noteId}}")
             },
         elevation = 6.dp
     ){

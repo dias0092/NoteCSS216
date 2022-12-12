@@ -13,6 +13,5 @@ data class Note (
     val title: String = "",
     @ColumnInfo
     val subtitle: String = "",
-    @ColumnInfo
     val fbId: String = ""
 )

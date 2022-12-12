@@ -28,24 +28,34 @@ import kz.sdu190103159.notesappcss_216.model.Note
 import kz.sdu190103159.notesappcss_216.navigation.NavRoute
 
 import kz.sdu190103159.notesappcss_216.ui.theme.NotesAppCSS216Theme
-import kz.sdu190103159.notesappcss_216.utils.Constants
 import kz.sdu190103159.notesappcss_216.utils.Constants.Keys.DELETE
+import kz.sdu190103159.notesappcss_216.utils.Constants.Keys.EMPTY
 import kz.sdu190103159.notesappcss_216.utils.Constants.Keys.NAV_BACK
-import kz.sdu190103159.notesappcss_216.utils.Constants.Keys.NONE
+
 import kz.sdu190103159.notesappcss_216.utils.Constants.Keys.SUBTITLE
 import kz.sdu190103159.notesappcss_216.utils.Constants.Keys.TITLE
 import kz.sdu190103159.notesappcss_216.utils.Constants.Keys.UPDATE
-import kz.sdu190103159.notesappcss_216.utils.Constants.Keys.UPDATE_NOTE
+import kz.sdu190103159.notesappcss_216.utils.DB_TYPE
+import kz.sdu190103159.notesappcss_216.utils.TYPE_FIREBASE
+import kz.sdu190103159.notesappcss_216.utils.TYPE_ROOM
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun NoteScreen(navController: NavHostController, viewModel: MainViewMdl, noteId: String?) {
     val notes = viewModel.readAllNotes().observeAsState(listOf()).value
-    val note = notes.firstOrNull{it.id == noteId?.toInt()} ?: Note(title = NONE , subtitle = NONE )
+    val note = when(DB_TYPE.value) {
+        TYPE_ROOM -> {
+            notes.firstOrNull() { it.id == noteId?.toInt() } ?: Note()
+        }
+        TYPE_FIREBASE -> {
+            notes.firstOrNull() {it.fbId == noteId } ?: Note()
+        }
+        else -> Note()
+    }
     val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val coroutionScope = rememberCoroutineScope()
-    var title by remember { mutableStateOf("Empty") }
-    var subtitle by remember { mutableStateOf("Empty") }
+    var title by remember { mutableStateOf(EMPTY) }
+    var subtitle by remember { mutableStateOf(EMPTY) }
 
     ModalBottomSheetLayout(
         sheetState = bottomSheetState,
@@ -80,7 +90,7 @@ fun NoteScreen(navController: NavHostController, viewModel: MainViewMdl, noteId:
                         onClick = {
                             viewModel.updateNote(
                                 note =
-                                Note(id = note.id, title = title, subtitle = subtitle)
+                                Note(id = note.id, title = title, subtitle = subtitle , fbId = note.fbId)
                             ){
                                 navController.navigate(NavRoute.MainScreen.route)
                             }

@@ -1,6 +1,7 @@
 package kz.sdu190103159.notesappcss_216.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -22,8 +23,7 @@ sealed class NavRoute(val route:String ){
     object NoteScreen: NavRoute(NOTE_SCREEN)
 }
 @Composable
-fun NoteNavHst(mViewModel: MainViewMdl) {
-    val navController = rememberNavController()
+fun NoteNavHst(mViewModel: MainViewMdl, navController: NavHostController) {
 
     NavHost(navController = navController , startDestination = NavRoute.StartScreen.route ) {
         composable(NavRoute.StartScreen.route) {

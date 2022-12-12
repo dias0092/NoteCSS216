@@ -8,11 +8,13 @@ const val TYPE_ROOM = "type_room"
 const val TYPE_FIREBASE = "type_firebase"
 const val FIREBASE_ID = "firebase id"
 
-var DB_TYPE = mutableStateOf("")
+
 
 lateinit var REPOSITORY: DatabaseRepository
 lateinit var LOGIN: String
 lateinit var PASSWORD: String
+var DB_TYPE = mutableStateOf("")
+
 
 object Constants {
     object Keys {
